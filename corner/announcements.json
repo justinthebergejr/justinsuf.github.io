@@ -1,10 +1,10 @@
 {
   "announcements": [
     {
-      "id": "2026-08-31-reflexis-new-app",
-      "header": "Reflexis's new official app",
-      "body": "Walgreens has announced and released a new scheduling app called Workcloud Shift, which is the official replacement for ESS41. To be honest, it's a much better experience than ESS41, and improving on ESS41 was the whole goal of corner.\n\nSo, where does this leave corner? Right now, I'm not too sure about its future. I had a lot of ideas for it, but this new app is a pretty big improvement. (It still makes you log in every single time, though technically, corner does too.)\n\nIf I'm being realistic, I don't have the highest hopes for corner's future. As I've continued working on this project, I've learned more about the potential risks of Walgreens taking it down and other legal concerns.\n\nThank you all so much for the support. I really appreciate it. Love you all!\n\n— Justin",
-      "date": "July 31st, 2026",
+      "id": "2026-09-16-thanks",
+      "header": "Thank you all, and goodnight!",
+      "body": "This was a fun project, but sadly all good things come to an end. This heavily violates Walgreens TOS as it's not an official app and I made it by reverse engineering the way reflexis sent messages to the client and back. I am worried that I may face legal issues with I continue further with the app. But I am also no longer working for Walgreens as I've moved on to college. So thank you all, I am sorry if you disappointed but I hope you understand. -Justin Theberge, Out!",
+      "date": "September 16th, 2026",
       "urgent": true
     }
   ]
