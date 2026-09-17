@@ -1,9 +1,9 @@
 {
   "announcements": [
     {
-      "id": "2026-09-16-thanks",
+      "id": "2026-09-16-thank-you-all",
       "header": "Thank you all, and goodnight!",
-      "body": "This was a fun project, but sadly all good things come to an end. This heavily violates Walgreens TOS as it's not an official app and I made it by reverse engineering the way reflexis sent messages to the client and back. I am worried that I may face legal issues with I continue further with the app. But I am also no longer working for Walgreens as I've moved on to college. So thank you all, I am sorry if you disappointed but I hope you understand. -Justin Theberge, Out!",
+      "body": "This was a fun project, but sadly all good things come to an end. This heavily violates Walgreens TOS as it's not an official app and I made it by reverse engineering the way reflexis sent messages to the client and back. I am worried that I may face legal issues with I continue further with the app. But I am also no longer working for Walgreens as I've moved on to college. Corner will cease to exist in 43 days from now, meaning Apple will likely to even stop you from opening the app as beta apps end up expiring. So thank you all, I am sorry if you disappointed but I hope you understand. -Justin Theberge, Out!",
       "date": "September 16th, 2026",
       "urgent": true
     }
