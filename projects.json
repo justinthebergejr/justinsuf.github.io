@@ -1,0 +1,8 @@
+[
+    { "repo": "justinthebergejr/meloemu-website", "description": "the source code for meloemu.org", "language": "HTML" },
+    { "repo": "justinthebergejr/Madeira-actions", "description": "run windows games on a non-jailbroken iOS devices", "language": "C" },
+    { "repo": "justinthebergejr/flatnotes", "description": "A self-hosted note taking web app that i modified for my college notetaking", "language": "Vue" },
+    { "repo": "justinthebergejr/deezer-downloader", "description": "deezer downloader with better ui for my simple minded people to understand", "language": "Python" },
+    { "repo": "justinthebergejr/justinsuf.github.io", "description": "the source code for my website justi.zone", "language": "CSS" },
+    { "repo": "matrix-harmony/harmony", "description": "A matrix client based on the look of classic Discord.", "language": "JavaScript" }
+]

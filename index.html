@@ -4,26 +4,44 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#141418" />
+    <meta name="color-scheme" content="dark" />
     <title>the justin zone</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
     <link rel="stylesheet" href="styles.css" />
     <script src="script.js" defer></script>
 </head>
 
 <body>
-    <section class="hero" id="top">
-        <div class="hero-card">
-            <img src="pfp.png" alt="Profile" />
-            <h1>hi, i’m justin</h1>
-            <p>20yo • new hampshire • cybersecurity major • video editor</p>
+    <main class="box">
+        <section class="justin-infomation">
+            <img src="pfp.png" alt="justin pfp" />
+            <h1>hi, i’m justin theberge</h1>
+            <p>20yo, new hampshire, cybersecurity major</p>
+            <p>graphic design, photography, video editing.</p>
+            <p>you won't catch my ass using generative AI</p>
             <div class="links">
-            <a href="blog.html">Blog</a>
-            <a href="https://github.com/JustinSUF">GitHub</a>
-            <a href="https://x.com/atjustintwt">Twitter</a>
-            <a href="https://www.tiktok.com/@atjustin06">TikTok</a>
-            <a href="https://www.instagram.com/justinthisinstance">Instagram</a>
-            <a href="https://ko-fi.com/atjustin">Ko-fi</a>
+            <a href="https://github.com/justinthebergejr" aria-label="GitHub" title="GitHub"><i class="fa-brands fa-github"></i></a>
+            <a href="https://x.com/atjustintwt" aria-label="Twitter" title="Twitter"><i class="fa-brands fa-twitter"></i></a>
+            <a href="https://www.tiktok.com/@atjustin06" aria-label="TikTok" title="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+            <a href="https://www.instagram.com/justinthebergejr" aria-label="Instagram" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+            <a href="https://ko-fi.com/atjustin" aria-label="Ko-fi" title="Ko-fi"><i class="fa-solid fa-mug-hot"></i></a>
             </div>
+        </section>
+
+        <div class="work">
+            <nav class="filters" id="filters" aria-label="photo categories"></nav>
+            <section class="gallery" id="gallery" aria-label="photos">
+            </section>
         </div>
+    </main>
+
+    <div class="preview" id="preview" role="dialog" aria-modal="true" aria-label="photo viewer" hidden>
+        <button class="preview-close" id="previewClose" aria-label="close photo viewer">close</button>
+        <button class="preview-nav prev" id="previewPrev" aria-label="previous photo">back</button>
+        <img id="previewImg" alt="" />
+        <button class="preview-nav next" id="previewNext" aria-label="next photo">next</button>
+    </div>
 </body>
 
 </html>
