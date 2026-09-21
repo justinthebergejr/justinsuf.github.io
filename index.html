@@ -2,24 +2,43 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <meta name="theme-color" content="#141418" />
-    <meta name="color-scheme" content="dark" />
-    <title>the justin zone</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
-    <link rel="stylesheet" href="styles.css?v=2" />
-    <script src="script.js?v=2" defer></script>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+    <meta name="theme-color" content="#141418"/>
+    <meta name="color-scheme" content="dark"/>
+    <title>justin theberge jr</title>
+    <meta name="description" content="20yo, new hampshire, cybersecurity major. graphic design, photography, video editing."/>
+    <link rel="canonical" href="https://justi.zone/"/>
+
+    <meta property="og:type" content="website"/>
+    <meta property="og:site_name" content="justin theberge jr"/>
+    <meta property="og:title" content="justin theberge jr"/>
+    <meta property="og:description" content="20yo, new hampshire, cybersecurity major. graphic design, photography, video editing."/>
+    <meta property="og:url" content="https://justi.zone/"/>
+    <meta property="og:image" content="https://justi.zone/pfp.png"/>
+    <meta property="og:image:alt" content="justin pfp"/>
+
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:site" content="@atjustintwt"/>
+    <meta name="twitter:title" content="justin theberge jr"/>
+    <meta name="twitter:description" content="20yo, new hampshire, cybersecurity major. graphic design, photography, video editing."/>
+    <meta name="twitter:image" content="https://justi.zone/pfp.png"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"/>
+    <link rel="stylesheet" href="styles.css?v=6"/>
+    <script src="script.js?v=6" defer></script>
 </head>
 
 <body>
     <main class="box">
+        <header class="top" id="top">
         <section class="justin-infomation">
             <img src="pfp.png" alt="justin pfp" />
+            <div class="bio"><div>
             <h1>hi, i’m justin theberge</h1>
             <p>20yo, new hampshire, cybersecurity major</p>
             <p>graphic design, photography, video editing.</p>
             <p>you won't catch my ass using generative AI</p>
+            </div></div>
             <div class="links">
             <a href="https://github.com/justinthebergejr" aria-label="GitHub" title="GitHub"><i class="fa-brands fa-github"></i></a>
             <a href="https://x.com/atjustintwt" aria-label="Twitter" title="Twitter"><i class="fa-brands fa-twitter"></i></a>
@@ -28,12 +47,11 @@
             <a href="https://ko-fi.com/atjustin" aria-label="Ko-fi" title="Ko-fi"><i class="fa-solid fa-mug-hot"></i></a>
             </div>
         </section>
+        <nav class="filters" id="filters" aria-label="photo categories"></nav>
+        </header>
 
-        <div class="work">
-            <nav class="filters" id="filters" aria-label="photo categories"></nav>
-            <section class="gallery" id="gallery" aria-label="photos">
-            </section>
-        </div>
+        <section class="gallery" id="gallery" aria-label="photos">
+        </section>
     </main>
 
     <div class="preview" id="preview" role="dialog" aria-modal="true" aria-label="photo viewer" hidden>

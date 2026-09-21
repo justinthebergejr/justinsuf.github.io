@@ -36,6 +36,7 @@ Promise.all([loadJSON("photos/photos.json"), loadJSON("projects.json")])
         shuffle(photos);
         projects = projectList.map(normalizeProject).filter(p => p.url);
         renderFilters();
+        measureHeader();
         render();
     });
 
@@ -175,6 +176,42 @@ document.addEventListener("keydown", e => {
     if (e.key === "ArrowLeft") step(-1);
     if (e.key === "ArrowRight") step(1);
 });
+
+const header = document.getElementById("top");
+const mobile = window.matchMedia("(max-width: 800px)");
+const bio = header.querySelector(".bio");
+let collapse = 1;
+let lastWidth = 0;
+
+function measureHeader() {
+    lastWidth = window.innerWidth;
+    if (!mobile.matches) {
+        header.style.removeProperty("--p");
+        return;
+    }
+    header.style.setProperty("--bio-h", `${bio.firstElementChild.offsetHeight}px`);
+    header.style.setProperty("--p", 0);
+    const full = header.offsetHeight;
+    header.style.setProperty("--p", 1);
+    collapse = Math.max(1, full - header.offsetHeight);
+    document.documentElement.style.setProperty("--header-h", `${full}px`);
+    updateHeader();
+}
+
+function updateHeader() {
+    if (!mobile.matches) return;
+    const p = Math.min(1, Math.max(0, window.scrollY / collapse));
+    header.style.setProperty("--p", p.toFixed(4));
+}
+
+window.addEventListener("scroll", updateHeader, { passive: true });
+window.addEventListener("resize", () => {
+    if (window.innerWidth !== lastWidth) measureHeader();
+});
+mobile.addEventListener("change", measureHeader);
+window.addEventListener("load", measureHeader);
+document.fonts?.ready.then(measureHeader);
+measureHeader();
 
 function escapeAttr(s) {
     return String(s).replace(/[&<>"']/g, c => ({
