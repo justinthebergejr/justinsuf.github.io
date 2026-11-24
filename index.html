@@ -24,13 +24,14 @@
     <meta name="twitter:description" content="20yo, new hampshire, cybersecurity major. graphic design, photography, video editing."/>
     <meta name="twitter:image" content="https://justi.zone/pfp.png"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"/>
-    <link rel="stylesheet" href="styles.css?v=6"/>
-    <script src="script.js?v=6" defer></script>
+    <link rel="stylesheet" href="styles.css?v=17"/>
+    <script src="script.js?v=17" defer></script>
 </head>
 
 <body>
     <main class="box">
         <header class="top" id="top">
+        <div class="sidebar">
         <section class="justin-infomation">
             <img src="pfp.png" alt="justin pfp" />
             <div class="bio"><div>
@@ -47,12 +48,29 @@
             <a href="https://ko-fi.com/atjustin" aria-label="Ko-fi" title="Ko-fi"><i class="fa-solid fa-mug-hot"></i></a>
             </div>
         </section>
-        <nav class="filters" id="filters" aria-label="photo categories"></nav>
+        </div>
+        <div class="toolbar">
+            <div class="group-picker">
+                <button id="sections" class="group-trigger" type="button" aria-label="portfolio group: media" aria-haspopup="listbox" aria-expanded="false" aria-controls="groupMenu">
+                    <span id="groupIcon" aria-hidden="true"></span>
+                    <span id="groupName">media</span>
+                    <svg class="group-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg>
+                </button>
+                <div class="group-menu" id="groupMenu" role="listbox" aria-label="portfolio group" hidden>
+                    <button type="button" role="option" data-group="media" aria-selected="true" tabindex="-1">media</button>
+                    <button type="button" role="option" data-group="projects" aria-selected="false" tabindex="-1">projects</button>
+                    <button type="button" role="option" data-group="devices" aria-selected="false" tabindex="-1">devices</button>
+                </div>
+            </div>
+            <nav class="filters" id="filters" aria-label="portfolio categories"></nav>
+        </div>
         </header>
 
         <section class="gallery" id="gallery" aria-label="photos">
         </section>
     </main>
+
+    <div class="nav-tooltip" id="navTooltip" role="tooltip" hidden></div>
 
     <div class="preview" id="preview" role="dialog" aria-modal="true" aria-label="photo viewer" hidden>
         <button class="preview-close" id="previewClose" aria-label="close photo viewer">close</button>

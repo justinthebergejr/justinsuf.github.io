@@ -1,11 +1,15 @@
 const gallery = document.getElementById("gallery");
 const filters = document.getElementById("filters");
+const sections = document.getElementById("sections");
+const groupMenu = document.getElementById("groupMenu");
 const preview = document.getElementById("preview");
 const previewImg = document.getElementById("previewImg");
 
 let photos = [];
 let projects = [];
+let deviceGroups = [];
 let categories = [];
+let section = "media";
 let filter = "all";
 let shown = [];
 let current = 0;
@@ -22,8 +26,8 @@ function loadJSON(url) {
         });
 }
 
-Promise.all([loadJSON("photos/photos.json"), loadJSON("projects.json")])
-    .then(([photoList, projectList]) => {
+Promise.all([loadJSON("photos/media/photos.json"), loadJSON("projects.json"), loadJSON("photos/devices/devices.json")])
+    .then(([photoList, projectList, deviceList]) => {
         photoList.forEach(group => {
             if (!group || !Array.isArray(group.files)) return;
             const category = group.category || "";
@@ -35,6 +39,9 @@ Promise.all([loadJSON("photos/photos.json"), loadJSON("projects.json")])
         });
         shuffle(photos);
         projects = projectList.map(normalizeProject).filter(p => p.url);
+        deviceGroups = deviceList.filter(group => group.category && Array.isArray(group.items));
+        readRoute();
+        renderSections();
         renderFilters();
         measureHeader();
         render();
@@ -52,7 +59,7 @@ function normalize(entry, category) {
     const file = item.file || item.src || "";
     const folder = category ? `${category}/` : "";
     return {
-        src: file && !/^https?:|^\//.test(file) ? encodeURI(`photos/${folder}${file}`) : file,
+        src: file && !/^https?:|^\//.test(file) ? encodeURI(`photos/media/${folder}${file}`) : file,
         alt: item.alt || item.caption || "",
         category
     };
@@ -69,41 +76,193 @@ function normalizeProject(entry) {
     };
 }
 
+function readRoute() {
+    const [page, category = "all"] = location.hash.slice(1).split("/");
+    section = ["projects", "devices"].includes(page) ? page : page === "consoles" ? "devices" : "media";
+    const names = section === "devices" ? ["all", ...deviceGroups.map(group => group.category)] : ["all", ...categories];
+    let requested = page === "consoles" ? "consoles" : category;
+    try { requested = decodeURIComponent(requested); } catch {}
+    filter = names.includes(requested) ? requested : "all";
+}
+
+function renderSections() {
+    document.getElementById("groupName").textContent = section;
+    sections.setAttribute("aria-label", `portfolio group: ${section}`);
+    document.getElementById("groupIcon").innerHTML = navigationIcon(section);
+    groupMenu.querySelectorAll("[data-group]").forEach(option => {
+        option.setAttribute("aria-selected", option.dataset.group === section);
+        option.innerHTML = `${navigationIcon(option.dataset.group)}<span>${option.dataset.group}</span>`;
+    });
+    closeGroupMenu();
+}
+
+function navigationIcon(name) {
+    const paths = {
+        media: '<rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/>',
+        projects: '<path d="m8 6-6 6 6 6m8-12 6 6-6 6M14 4l-4 16"/>',
+        devices: '<rect x="4" y="3" width="16" height="13" rx="2"/><path d="m4 16-2 5h20l-2-5M9 18h6"/>',
+        all: '<rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>',
+        drawings: '<path d="m16 3 5 5L8 21H3v-5ZM13 6l5 5M3 16l5 5"/>',
+        graphics: '<path d="m7 3 5 8H2Z"/><rect x="3" y="15" width="7" height="7" rx="1"/><circle cx="17" cy="16" r="5"/>',
+        "edited photography": '<path d="M4 3v7m0 4v7M12 3v11m0 4v3M20 3v2m0 4v12M1 10h6m2 4h6m2-9h6"/>',
+        "plain photography": '<path d="M8 5 6 8H3a1 1 0 0 0-1 1v11h20V9a1 1 0 0 0-1-1h-3l-2-3Z"/><circle cx="12" cy="14" r="4"/>',
+        consoles: '<path d="M7 7h10c3 0 4 3 5 10 .3 3-2 4-4 2l-3-3H9l-3 3c-2 2-4.3 1-4-2 1-7 2-10 5-10ZM7 10v5m-2.5-2.5h5"/><circle cx="16" cy="11" r=".7"/><circle cx="19" cy="14" r=".7"/>',
+        phones: '<rect x="6" y="2" width="12" height="20" rx="3"/><path d="M10 5h4m-3 14h2"/>',
+        tablets: '<rect x="3" y="2" width="18" height="20" rx="3"/><path d="M11 19h2"/>',
+        computers: '<rect x="2" y="3" width="20" height="14" rx="2"/><path d="M12 17v5m-5 0h10"/>'
+    };
+    return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">${paths[name] || paths.all}</svg>`;
+}
+
+const navTooltip = document.getElementById("navTooltip");
+let tooltipButton = null;
+
+function hideNavTooltip() {
+    tooltipButton?.removeAttribute("aria-describedby");
+    tooltipButton = null;
+    navTooltip.hidden = true;
+}
+
+function showNavTooltip(btn) {
+    hideNavTooltip();
+    tooltipButton = btn;
+    navTooltip.textContent = btn.getAttribute("aria-label");
+    navTooltip.hidden = false;
+    btn.setAttribute("aria-describedby", "navTooltip");
+    const rect = btn.getBoundingClientRect();
+    const width = navTooltip.offsetWidth;
+    const height = navTooltip.offsetHeight;
+    navTooltip.style.left = `${Math.max(8, Math.min(innerWidth - width - 8, rect.left + (rect.width - width) / 2))}px`;
+    navTooltip.style.top = `${rect.top > height + 12 ? rect.top - height - 8 : rect.bottom + 8}px`;
+}
+
+document.addEventListener("pointerover", e => {
+    const btn = e.target.closest(".icon-filter");
+    if (btn && !btn.contains(e.relatedTarget)) showNavTooltip(btn);
+});
+document.addEventListener("pointerout", e => {
+    if (tooltipButton?.contains(e.target) && !tooltipButton.contains(e.relatedTarget) && document.activeElement !== tooltipButton) hideNavTooltip();
+});
+document.addEventListener("focusin", e => {
+    if (e.target.matches(".icon-filter")) showNavTooltip(e.target);
+});
+document.addEventListener("focusout", e => {
+    if (e.target === tooltipButton) hideNavTooltip();
+});
+document.addEventListener("keydown", e => {
+    if (e.key === "Escape") hideNavTooltip();
+});
+window.addEventListener("scroll", hideNavTooltip, true);
+window.addEventListener("resize", hideNavTooltip);
+
+function closeGroupMenu(restoreFocus = false) {
+    groupMenu.hidden = true;
+    sections.setAttribute("aria-expanded", "false");
+    if (restoreFocus) sections.focus();
+}
+
+function openGroupMenu() {
+    hideNavTooltip();
+    groupMenu.hidden = false;
+    sections.setAttribute("aria-expanded", "true");
+    groupMenu.querySelector('[aria-selected="true"]')?.focus();
+}
+
+sections.addEventListener("click", () => {
+    if (groupMenu.hidden) openGroupMenu();
+    else closeGroupMenu(true);
+});
+sections.addEventListener("keydown", e => {
+    if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+        e.preventDefault();
+        openGroupMenu();
+    }
+});
+groupMenu.addEventListener("click", e => {
+    const option = e.target.closest("[data-group]");
+    if (!option) return;
+    location.hash = option.dataset.group;
+    closeGroupMenu(true);
+});
+groupMenu.addEventListener("keydown", e => {
+    const options = [...groupMenu.querySelectorAll("[data-group]")];
+    const index = options.indexOf(document.activeElement);
+    if (["ArrowDown", "ArrowUp", "Home", "End"].includes(e.key)) {
+        e.preventDefault();
+        const next = e.key === "Home" ? 0 : e.key === "End" ? options.length - 1
+            : (index + (e.key === "ArrowDown" ? 1 : -1) + options.length) % options.length;
+        options[next].focus();
+    } else if (e.key === "Escape") {
+        e.preventDefault();
+        closeGroupMenu(true);
+    } else if (e.key === "Tab") {
+        closeGroupMenu(true);
+    }
+});
+document.addEventListener("pointerdown", e => {
+    if (!e.target.closest(".group-picker")) closeGroupMenu();
+});
+document.addEventListener("focusin", e => {
+    if (!e.target.closest(".group-picker")) closeGroupMenu();
+});
+
+window.addEventListener("hashchange", () => {
+    readRoute();
+    renderSections();
+    renderFilters();
+    render();
+    measureHeader();
+});
+
 function renderFilters() {
-    const names = ["all", ...categories];
-    if (projects.length) names.push("projects");
+    hideNavTooltip();
+    filters.hidden = section === "projects";
+    filters.setAttribute("aria-label", section === "devices" ? "device categories" : "media categories");
+    const names = section === "projects" ? [] : section === "devices"
+        ? ["all", ...deviceGroups.map(group => group.category)]
+        : ["all", ...categories];
     filters.innerHTML = names.map(name => `
-        <button class="filter" type="button" data-filter="${escapeAttr(name)}" aria-pressed="${name === filter}">${escapeAttr(name)}</button>
+        <button class="filter icon-filter" type="button" data-filter="${escapeAttr(name)}" aria-label="${escapeAttr(name)}" aria-pressed="${name === filter}">${navigationIcon(name)}</button>
     `).join("");
     filters.querySelectorAll(".filter").forEach(btn => {
         btn.addEventListener("click", () => {
-            filter = btn.dataset.filter;
-            filters.querySelectorAll(".filter").forEach(b => b.setAttribute("aria-pressed", b === btn));
-            render();
+            location.hash = `${section}/${encodeURIComponent(btn.dataset.filter)}`;
         });
     });
 }
 
 function render() {
-    if (!photos.length && !projects.length) {
-        gallery.innerHTML = '<p class="gallery-status">no photos yet.</p>';
+    gallery.classList.toggle("gallery-consoles", section === "devices");
+    gallery.setAttribute("aria-label", section === "devices" ? "device collection" : section === "projects" ? "projects" : "photos");
+    shown = [];
+    if (section === "devices") {
+        const groups = filter === "all" ? deviceGroups : deviceGroups.filter(group => group.category === filter);
+        gallery.innerHTML = groups.map(group => deviceCollection(group.title, group.category, group.items)).join("");
         return;
     }
-
+    if (section === "projects") {
+        gallery.innerHTML = projects.map(projectTile).join("") || '<p class="gallery-status">no projects yet.</p>';
+        return;
+    }
     shown = filter === "all" ? photos : photos.filter(p => p.category === filter);
-    const tiles = shown.map((p, i) => photoTile(p, i));
-    if (filter !== "all" && filter !== "projects") {
-        gallery.innerHTML = tiles.join("") || '<p class="gallery-status">nothing here yet.</p>';
-        bindPhotos();
-        return;
-    }
-    if (filter === "projects") tiles.length = 0;
-    projects.forEach(p => {
-        const at = Math.floor(Math.random() * (tiles.length + 1));
-        tiles.splice(at, 0, projectTile(p));
-    });
-    gallery.innerHTML = tiles.join("");
+    gallery.innerHTML = shown.map(photoTile).join("") || '<p class="gallery-status">nothing here yet.</p>';
     bindPhotos();
+}
+
+function deviceCollection(title, folder, items) {
+    return `
+        <div class="collection-heading">
+            <h2>${escapeAttr(title)}</h2>
+        </div>
+        <div class="console-items">
+            ${items.map(item => `
+                <div class="console-space" tabindex="0">
+                    <img class="console-image" src="${escapeAttr(encodeURI(`photos/devices/${folder}/${item.image}`))}" alt="${escapeAttr(item.name)}" decoding="async" />
+                    <span class="device-name" aria-hidden="true">${escapeAttr(item.name)}</span>
+                </div>
+            `).join("")}
+        </div>
+    `;
 }
 
 function bindPhotos() {

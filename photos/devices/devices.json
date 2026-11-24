@@ -1,0 +1,98 @@
+[
+    {
+        "category": "consoles",
+        "title": "console collection",
+        "items": [
+            { "name": "PSP", "image": "PSP.png" },
+            { "name": "PlayStation", "image": "PS1.png" },
+            { "name": "PlayStation 2", "image": "PS2.png" },
+            { "name": "PlayStation 3", "image": "PS3.png" },
+            { "name": "PlayStation 4", "image": "PS4.png" },
+            { "name": "Xbox One S", "image": "Xbox One S.png" },
+            { "name": "Xbox Series S", "image": "Xbox Series S.png" },
+            { "name": "Nintendo DSi", "image": "Nintendo DSi.png" },
+            { "name": "Wii", "image": "Wii.png" },
+            { "name": "Wii U", "image": "Wii U.png" },
+            { "name": "Nintendo Switch", "image": "Switch.png" },
+            { "name": "Nintendo Switch 2", "image": "Switch 2.png" },
+            { "name": "Steam Deck", "image": "Steam Deck.png" }
+        ]
+    },
+    {
+        "category": "phones",
+        "title": "phone collection",
+        "items": [
+            { "name": "iPhone 16 Pro", "image": "iphone16pro.png" },
+            { "name": "iPhone 12 Mini", "image": "iPhone 12 Mini.png" },
+            { "name": "iPhone 5s", "image": "IPhone_5s_Black.png" },
+            { "name": "iPhone 4s", "image": "IPhone_4S.png" },
+            { "name": "iPhone 4", "image": "IPhone_4.png" },
+            { "name": "iPod touch 4th-gen", "image": "IPod_touch_4G.png" },
+            { "name": "OnePlus 11 5G", "image": "OnePlus 11 5G.png" },
+            { "name": "OnePlus 7 Pro", "image": "OnePlus 7 Pro.png" },
+            { "name": "OnePlus 6t", "image": "OnePlus 6t.png" },
+            { "name": "Samsung Galaxy Z Fold 6", "image": "Samsung_Galaxy_Z_Fold6.png" }
+        ]
+    },
+    {
+        "category": "tablets",
+        "title": "tablet collection",
+        "items": [
+            { "name": "Lenovo IdeaPad Duet Chromebook CT-X636F", "year": 2020, "image": "Lenovo IdeaPad Duet.png" },
+            { "name": "Amazon Fire HD 10 (9th Generation)", "year": 2019, "image": "Amazon Fire HD 10.png" }
+        ]
+    },
+    {
+        "category": "computers",
+        "title": "computer collection",
+        "items": [
+            {
+                "name": "Dell Precision 5570",
+                "year": 2022,
+                "image": "Dell Precision 5570.png",
+                "specs": {
+                    "cpu": "Intel Core i9-12900H",
+                    "gpu": "RTX A2000 (8GB)",
+                    "memory": "32GB DDR5 @ 4800MHz",
+                    "storage": "1TB NVMe SSD",
+                    "display": "4K touch 60Hz panel"
+                }
+            },
+            {
+                "name": "HP Omen 15-en0013dx",
+                "year": 2020,
+                "image": "HP-omen-15-en0013dx.png",
+                "specs": {
+                    "cpu": "Ryzen 7 4800H",
+                    "gpu": "GeForce GTX 1660 Ti (6GB)",
+                    "memory": "8GB DDR4 @ 3200MHz",
+                    "display": "1080p 144Hz panel"
+                }
+            },
+            {
+                "name": "Samsung Galaxy Book Go",
+                "year": 2021,
+                "image": "Samsung Book-Go.png",
+                "specs": {
+                    "cpu": "Qualcomm Snapdragon 8cx Gen 2",
+                    "gpu": "Integrated Adreno graphics",
+                    "memory": "8GB LPDDR4X @ 2133MHz",
+                    "storage": "256GB SSD",
+                    "display": "1080p display"
+                }
+            },
+            {
+                "name": "13.6-inch MacBook Air",
+                "year": 2026,
+                "image": "MacBook Air.png",
+                "specs": {
+                    "cpu": "Apple M5, 10-core CPU",
+                    "gpu": "8-core GPU",
+                    "memory": "16GB unified memory",
+                    "storage": "1TB SSD",
+                    "display": "Liquid Retina display"
+                }
+            }
+        ]
+    }
+]
