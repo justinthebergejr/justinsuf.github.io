@@ -349,6 +349,7 @@ function measureHeader() {
         return;
     }
     header.style.setProperty("--bio-h", `${bio.firstElementChild.offsetHeight}px`);
+    header.style.setProperty("--listening-h", `${document.getElementById("lastfm").offsetHeight}px`);
     header.style.setProperty("--p", 0);
     const full = header.offsetHeight;
     header.style.setProperty("--p", 1);
@@ -371,6 +372,71 @@ mobile.addEventListener("change", measureHeader);
 window.addEventListener("load", measureHeader);
 document.fonts?.ready.then(measureHeader);
 measureHeader();
+
+const lastfm = document.getElementById("lastfm");
+const lastfmArt = document.getElementById("lastfmArt");
+let lastfmLoading = false;
+
+lastfmArt.addEventListener("error", () => {
+    lastfmArt.hidden = true;
+    measureHeader();
+});
+
+function lastfmURL(value, fallback, allowedHost) {
+    try {
+        const url = new URL(value);
+        return url.protocol === "https:" && (!allowedHost || allowedHost.includes(url.hostname)) ? url.href : fallback;
+    } catch {
+        return fallback;
+    }
+}
+
+async function updateLastFM() {
+    if (document.hidden || lastfmLoading) return;
+    lastfmLoading = true;
+    try {
+        const response = await fetch("https://lastfm-last-played.biancarosa.com.br/JustinSUF/latest-song", {
+            cache: "no-cache",
+            signal: AbortSignal.timeout(10000)
+        });
+        if (!response.ok) throw new Error(`Last.fm: ${response.status}`);
+        const { track } = await response.json();
+        if (!track || typeof track.name !== "string" || !track.name) throw new Error("No recent track");
+        const artist = typeof track.artist === "string" ? track.artist : track.artist?.["#text"] || "";
+        const playing = track["@attr"]?.nowplaying === "true";
+        const status = playing ? "listening now" : "last played";
+        document.getElementById("lastfmStatus").textContent = status;
+        document.getElementById("lastfmTrack").textContent = track.name;
+        document.getElementById("lastfmArtist").textContent = artist;
+        lastfm.dataset.playing = String(playing);
+        lastfm.setAttribute("aria-label", `${status}: ${track.name} by ${artist} on Last.fm`);
+        lastfm.href = lastfmURL(track.url, "https://www.last.fm/user/JustinSUF", ["www.last.fm", "last.fm"]);
+        const images = Array.isArray(track.image) ? track.image : [];
+        const image = images.find(image => image.size === "large") || images[images.length - 1];
+        const artwork = lastfmURL(image?.["#text"], "");
+        lastfmArt.hidden = !artwork;
+        if (artwork) {
+            if (lastfmArt.src !== artwork) lastfmArt.src = artwork;
+        } else {
+            lastfmArt.removeAttribute("src");
+        }
+        lastfm.hidden = false;
+        document.getElementById("listening").hidden = false;
+    } catch {
+        // Hide unavailable or stale playback rather than claiming a track is still live.
+        lastfm.hidden = true;
+        document.getElementById("listening").hidden = true;
+    } finally {
+        lastfmLoading = false;
+        measureHeader();
+    }
+}
+
+updateLastFM();
+window.setInterval(updateLastFM, 30000);
+document.addEventListener("visibilitychange", () => {
+    if (!document.hidden) updateLastFM();
+});
 
 function escapeAttr(s) {
     return String(s).replace(/[&<>"']/g, c => ({

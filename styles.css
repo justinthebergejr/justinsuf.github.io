@@ -56,14 +56,18 @@ a {
     top: 3rem;
 }
 
-.justin-infomation {
+.justin-infomation,
+.lastfm {
     background: rgba(20, 20, 24, 0.8);
     backdrop-filter: blur(12px);
-    padding: 2rem 2rem;
     border-radius: 20px;
     border: 1px solid rgba(255, 255, 255, 0.05);
     box-shadow: 0 40px 80px rgba(0, 0, 0, 0.55);
     animation: floatIn 1s ease forwards;
+}
+
+.justin-infomation {
+    padding: 2rem;
 }
 
 @keyframes floatIn {
@@ -94,6 +98,66 @@ a {
 .justin-infomation p {
     font-size: 0.9rem;
     opacity: 0.7;
+}
+
+.listening {
+    margin-top: 1rem;
+}
+
+.lastfm {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1.25rem 2rem;
+    text-align: left;
+}
+
+.listening[hidden],
+.lastfm[hidden],
+.lastfm-art[hidden] {
+    display: none;
+}
+
+.lastfm-art {
+    display: block;
+    flex: none;
+    width: 3.6rem;
+    height: 3.6rem;
+    margin: 0;
+    border-radius: 6px;
+    object-fit: cover;
+}
+
+.lastfm-copy {
+    min-width: 0;
+}
+
+.lastfm-copy > span {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.lastfm-status {
+    font-size: 0.7rem;
+    opacity: 0.5;
+}
+
+.lastfm-track {
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+.lastfm-artist {
+    font-size: 0.75rem;
+    opacity: 0.7;
+}
+
+.lastfm:hover .lastfm-track,
+.lastfm:focus-visible .lastfm-track {
+    text-decoration: underline;
+    text-underline-offset: 3px;
 }
 
 .justin-infomation .links {
@@ -541,6 +605,18 @@ a {
 
     .sidebar {
         position: static;
+    }
+
+    .listening {
+        height: calc(var(--listening-h, 0px) * (1 - var(--p)));
+        margin-top: calc(1rem * (1 - var(--p)));
+        overflow: hidden;
+        border-radius: 20px;
+        opacity: calc(1 - var(--p));
+    }
+
+    .lastfm {
+        padding: 1.25rem 1.5rem;
     }
 
     .justin-infomation {
