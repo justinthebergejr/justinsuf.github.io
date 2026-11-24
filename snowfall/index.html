@@ -6,59 +6,62 @@
   <meta name="description" content="Testing a lifetime's memory of New England snow against NOAA daily station records, 1940–2019.">
   <link rel="canonical" href="https://justi.zone/snowfall/">
   <title>Was there more snow back then? | New England, 1940–2019</title>
-  <link rel="stylesheet" href="style.css">
-  <script defer src="report.js"></script>
+  <meta name="theme-color" content="#edf3f9">
+  <link rel="stylesheet" href="style.css?v=2">
+  <script defer src="report.js?v=2"></script>
 </head>
 <body>
-<header class="masthead"><a href="#">FIELD NOTES / CLIMATE</a><a href="https://github.com/justinthebergejr/snowfall-hw">Data &amp; code ↗</a></header>
-<main>
+<a class="skip-link" href="#report">Skip to report</a>
+<header class="masthead"><a class="home" href="https://justi.zone/">justi.zone</a><span class="breadcrumb">/ snowfall</span><a class="code-link" href="https://github.com/justinthebergejr/snowfall-hw">View the code</a></header>
+<div class="page-layout">
+<aside class="contents"><nav aria-label="On this page"><p>In this report</p><a href="#comparison">Snowfall over time</a><a href="#geography">State results</a><a href="#confidence">Uncertainty</a><a href="#methods">Methods &amp; limits</a><a href="#sources">Data &amp; downloads</a></nav><p class="side-note">New England<br>1940–2019<br><a href="https://www.ncei.noaa.gov/products/land-based-station/global-historical-climatology-network-daily">NOAA daily records</a></p></aside>
+<main id="report">
   <section class="hero">
-    <p class="eyebrow">NEW ENGLAND · 1940–2019 · NOAA GHCN-DAILY</p>
-    <h1>Was there more<br>snow back then?</h1>
-    <p class="intro">Born in 1939, my uncle remembered snowier days. We put his memory to the test: six states, eighty years, and the weather stations that were there for both.</p>
-    <div id="verdict" class="verdict" aria-live="polite"><strong>No — not less snowfall in this comparison.</strong><p>The published 21-station index shows 9.0% more annual snowfall in 2000–2019 than in 1940–1999. Uncertainty intervals include zero; this is not proof of a persistent increase.</p></div>
-    <noscript><p>This report needs JavaScript to display its computed answer and graphs. The <a href="assets/results.json">complete numerical results</a> and <a href="assets/station-years.csv">station-year data</a> are also available directly.</p></noscript>
+    <p class="article-meta">A snowfall comparison for New England</p>
+    <h1>Did it snow more when my uncle was young?</h1>
+    <p class="intro">My uncle was born in 1939 and died in 2024. He lived mostly in New England, and he complained that there wasn’t as much snow as there used to be. Do the weather records agree?</p>
+    <div id="verdict" class="verdict"><h2>No, not in this comparison.</h2><p>The 21-station index shows <strong>9.0% more annual snowfall</strong> in 2000–2019 than in 1940–1999. But the uncertainty interval includes zero, so this isn’t clear evidence of a lasting increase, either.</p></div>
+    <p class="scope-note">This measures snow falling, not how long it stays on the ground.</p>
+    <noscript><p>Enable JavaScript for the interactive graphs, or read the <a href="assets/results.json">numerical results</a> and <a href="assets/station-years.csv">station-year data</a> directly.</p></noscript>
   </section>
   <section aria-labelledby="comparison">
-    <p class="eyebrow">01 / THE COMPARISON</p>
-    <h2 id="comparison">Not one storm. Two eras.</h2>
-    <p>We compare mean <strong>annual snowfall</strong> in <strong>1940–1999</strong> with <strong>2000–2019</strong>. “Snow” means new snow falling, not the depth or duration of snow on the ground. New England means Connecticut, Maine, Massachusetts, New Hampshire, Rhode Island, and Vermont.</p>
-    <div class="metrics" id="metrics"></div>
+    <h2 id="comparison">What the records show</h2>
+    <p>I’m treating “back then” as <strong>1940–1999</strong> and “nowadays” as <strong>2000–2019</strong>. The comparison uses stations with enough usable observations in both periods, across all six New England states.</p>
     <figure>
-      <h3>A lot of weather around the average</h3>
+      <div class="figure-heading"><h3>Annual snowfall, 1940–2019</h3><span>Compared with the earlier average</span></div>
       <div id="timeline"></div>
-      <figcaption>Annual snowfall relative to each station’s 1940–1999 mean. Stations are averaged within states, then the six states receive equal weight. The warm shaded area marks 2000–2019. Annual coverage changes; the headline is calculated from station period means, not by averaging this line.</figcaption>
+      <div class="year-explorer" id="year-explorer" hidden><div class="year-readout"><label for="year">Explore a year</label><output id="year-value" for="year" aria-live="polite"></output></div><input id="year" type="range" min="1940" max="2019" value="2000" step="1"><div class="range-labels"><span>1940</span><span>2019</span></div></div>
+      <figcaption>Each station is compared with its own 1940–1999 mean; stations are averaged within states, then states get equal weight. The blue shading marks 2000–2019. Gaps mean at least one state has no accepted observations that year. The headline uses station period means, not an average of this line.</figcaption>
     </figure>
   </section>
   <section aria-labelledby="geography">
-    <p class="eyebrow">02 / THE GEOGRAPHY</p>
-    <h2 id="geography">A region is not a single backyard.</h2>
+    <h2 id="geography">The answer varies by state</h2>
     <p id="state-summary"></p>
     <figure>
-      <h3>Change in mean annual snowfall, by state</h3>
+      <div class="figure-heading"><h3>Later-period snowfall by state</h3><span>2000–2019 relative to 1940–1999</span></div>
       <div id="states-chart"></div>
       <figcaption>Percent change from 1940–1999 to 2000–2019. Each state is the unweighted mean of its retained stations’ percent changes. A negative value supports the uncle’s claim locally; a positive value does not. These are station-sample summaries, not area-weighted state estimates.</figcaption>
     </figure>
-    <details><summary>Inspect every included station</summary>
+    <details><summary>See the 21 stations and their snowfall totals</summary>
       <p>Means are in inches per calendar year; counts show accepted years out of 60 and 20. Coordinates are in the downloadable results.</p>
       <div class="table-scroll"><table><thead><tr><th>Station / GHCN ID</th><th>State</th><th>1940–99</th><th>2000–19</th><th>Change</th><th>Years</th></tr></thead><tbody id="station-table"></tbody></table></div>
     </details>
   </section>
   <section aria-labelledby="confidence">
-    <p class="eyebrow">03 / THE STRESS TEST</p>
-    <h2 id="confidence">How much should we trust the difference?</h2>
+    <h2 id="confidence">How certain is that 9% difference?</h2>
+    <p>Twenty years can include an unusual run of snowy or quiet winters. Resampling the observed years gives a sense of how much the result can vary.</p>
+    <figure class="interval-figure"><div class="figure-heading"><h3>The estimate and its uncertainty</h3><span>95% bootstrap intervals</span></div><div id="interval-chart"></div><figcaption>The dot is the observed regional change. Lines show the range from resampling individual years or five-year blocks. Both cross zero, which represents no change.</figcaption></figure>
     <p id="uncertainty"></p>
     <div class="table-scroll"><table><caption>Does changing the completeness rule change the answer?</caption><thead><tr><th>Required daily coverage, every month</th><th>Retained stations</th><th>Regional change</th></tr></thead><tbody id="sensitivity"></tbody></table></div>
     <p>All versions require at least 40 accepted years in the earlier period and 14 in the later one (at least two thirds of each era). Each sensitivity rebuilds its fixed station panel; it tests both missingness rules and the resulting station selection. If a panel loses any state, no six-state result is reported.</p>
   </section>
   <section class="methods" aria-labelledby="methods">
-    <p class="eyebrow">04 / METHODS &amp; LIMITS</p>
-    <h2 id="methods">An answer you can audit.</h2>
+    <h2 id="methods">How the comparison works</h2>
     <ol>
-      <li><strong>Select without looking at the change.</strong> Start with every station in the six states whose GHCN inventory lists SNOW beginning by 1960 and ending in or after 2013. These are necessary endpoints for obtaining 40 earlier and 14 later years, not evidence of completeness. <span id="selection"></span></li>
+      <li><strong>Find stations with long records.</strong> Start with every station in Connecticut, Maine, Massachusetts, New Hampshire, Rhode Island, and Vermont whose GHCN inventory lists SNOW beginning by 1960 and ending in or after 2013. These are necessary endpoints for obtaining 40 earlier and 14 later years, not evidence of completeness. <span id="selection"></span></li>
       <li><strong>Read the original daily records.</strong> Parse NOAA’s fixed-width <code>.dly</code> files. SNOW is in millimeters; divide by 25.4 for inches. Reject missing values (<code>-9999</code>), negative values and every nonblank quality flag. Trace snowfall contributes zero measurable millimeters. NOAA’s “presumed zero” values are retained as supplied.</li>
       <li><strong>Do not turn missing days into zero-snow days.</strong> Accept a calendar year only when <em>every month</em> has at least 95% valid daily readings. Sum accepted observations without filling or scaling. A small number of unobserved days can still understate totals. Keep only stations with at least two thirds of years accepted in each era (40/60 and 14/20). The same stations serve both periods; their individual accepted years can differ. An initial requirement of a pre-1941 start and 80% of years left some states unrepresented; these coverage rules were revised before calculating a regional result.</li>
-      <li><strong>Compare like with like.</strong> For each station, compute 100 × (later mean / earlier mean − 1). Average those percentages within each state, then average all six states. This avoids letting snowier sites dominate, or letting states with more stations dominate. It describes a typical state's sampled relative change—not regional total inches, population exposure, or a land-area average.</li>
+      <li><strong>Give each state equal weight.</strong> For each station, compute 100 × (later mean / earlier mean − 1). Average those percentages within each state, then average all six states. This avoids letting snowier sites dominate, or letting states with more stations dominate. It describes a typical state's sampled relative change, not regional total inches, population exposure, or a land-area average.</li>
       <li><strong>Test variability, not just direction.</strong> Use 5,000 bootstrap replicates, resampling 60 earlier and 20 later years separately. All stations share each year draw to retain spatial dependence; absent station-years are omitted. Repeat with circular five-year blocks to allow short-range temporal dependence. Percentile intervals are conditional on this station panel, not a correction for measurement bias.</li>
     </ol>
     <h3>What this cannot tell us</h3>
@@ -66,8 +69,7 @@
     <p>A snowier total can coexist with faster melting, fewer snow-covered days, or a shorter winter. We did not analyze snow depth (<code>SNWD</code>) or attribute changes to climate forcing. Nor does a two-period comparison establish a monotonic trend. My uncle’s address and precise meaning of “less snow” are unknown: the verdict applies to the stated regional snowfall test, not to the truth of his personal experience.</p>
   </section>
   <section aria-labelledby="sources">
-    <p class="eyebrow">05 / SOURCES &amp; REPRODUCTION</p>
-    <h2 id="sources">Follow the snow back to the source.</h2>
+    <h2 id="sources">Data, sources, and code</h2>
     <p id="snapshot"></p>
     <ul class="sources">
       <li><a href="https://www.ncei.noaa.gov/products/land-based-station/global-historical-climatology-network-daily">NOAA GHCN-Daily dataset overview</a> · <a href="https://www.ncei.noaa.gov/pub/data/ghcn/daily/readme.txt">File formats, flags &amp; units</a></li>
@@ -75,12 +77,13 @@
       <li>Menne et al. (2012), <em>Global Historical Climatology Network–Daily, Version 3</em>. NOAA NCDC. <a href="https://doi.org/10.7289/V5D21VHZ">doi:10.7289/V5D21VHZ</a>.</li>
       <li><a href="assets/results.json">Computed results (JSON)</a> · <a href="assets/station-years.csv">Accepted station-years (CSV)</a> · <a href="assets/manifest.json">Source file sizes &amp; SHA-256 hashes</a></li>
     </ul>
-    <p>The Python script downloads the data, applies the rules, computes both uncertainty intervals, and writes the small evidence tables this page reads. Raw data stay out of Git. Graphs are drawn directly from the results in your browser; no chart service or build step is required.</p>
+    <p>To reproduce the report, run these commands with Python 3.11 or later. The script downloads NOAA’s daily data and saves the small summary files used by this page. Raw downloads are excluded from Git.</p>
     <pre><code>python scripts/analyze.py
 python -m unittest discover -s tests
 python -m http.server 8000 --directory docs</code></pre>
   </section>
 </main>
-<footer>A family memory, checked against the record.<br><a href="https://github.com/justinthebergejr/snowfall-hw">Open methods. Small files. Reproducible evidence. ↗</a></footer>
+</div>
+<footer><a href="https://justi.zone/">Back to justi.zone</a><a href="https://github.com/justinthebergejr/snowfall-hw">Source code &amp; analysis</a></footer>
 </body>
 </html>
