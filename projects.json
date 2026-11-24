@@ -4,5 +4,9 @@
     { "repo": "justinthebergejr/flatnotes", "description": "A self-hosted note taking web app that i modified for my college notetaking", "language": "Vue" },
     { "repo": "justinthebergejr/deezer-downloader", "description": "deezer downloader with better ui for my simple minded people to understand", "language": "Python" },
     { "repo": "justinthebergejr/justinsuf.github.io", "description": "the source code for my website justi.zone", "language": "CSS" },
-    { "repo": "matrix-harmony/harmony", "description": "A matrix client based on the look of classic Discord.", "language": "JavaScript" }
+    { "repo": "matrix-harmony/harmony", "description": "A matrix client based on the look of classic Discord.", "language": "JavaScript" },
+    { "repo": "justinthebergejr/GuestSystem", "description": "a guest system i made for PlymouthMC", "language": "Java" },
+    { "repo": "justinthebergejr/refractify", "description": "Spotify, with the benefits of Apple Music and Glass", "language": "Objective-C" },
+    { "repo": "justinthebergejr/Celeste-Classic-NS2", "description": "Celeste Classic on the NS2", "language": "C#" },
+    { "repo": "justinthebergejr/oneplus-salami-windows", "description": "Native Windows 11 ARM64 on OnePlus 11 (salami)", "language": "C" }
 ]
